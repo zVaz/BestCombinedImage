@@ -41,6 +41,11 @@ if __name__ == '__main__':
         os.makedirs(os.path.dirname(images_dir))
    images = []
    
+   cropped_dir = "./cropped/"
+   if not os.path.exists(os.path.dirname(cropped_dir)):
+        os.makedirs(os.path.dirname(cropped_dir))
+   
+   
    for filename in os.listdir(images_dir):
       file_path = os.path.join(images_dir,filename)
       if os.path.isfile(file_path) and filename[0] != ".":
@@ -56,9 +61,6 @@ if __name__ == '__main__':
          image.seek(0)
          highlight_faces(image, faces, output_filename, filename)
 
-   cropped_dir = "./cropped/"
-   if not os.path.exists(os.path.dirname(cropped_dir)):
-        os.makedirs(os.path.dirname(cropped_dir))
    cropped = []
    
    for filename in os.listdir(cropped_dir):
