@@ -1,7 +1,7 @@
 # **Faces Grouping From Image**
 ## **API Access**
-### Google
-1. Select or create a GCP project. [here](https://console.cloud.google.com/cloud-resource-manager?_ga=2.38538282.-822335999.1544290095)
+### Google [Guide](https://docs.aws.amazon.com/rekognition/latest/dg/setting-up.html)
+1. Select or create a GCP project. [here](https://cloud.google.com/vision/docs/quickstart-client-libraries)
 2. Make sure that billing is enabled for your project. [here](https://cloud.google.com/billing/docs/how-to/modify-project)
 3. Enable the Cloud Vision API. [here](https://console.cloud.google.com/flows/enableapi?apiid=vision-json.googleapis.com&_ga=2.105122826.-822335999.1544290095)
 4. Set up authentication:
@@ -11,7 +11,7 @@
    4. From the Role drop-down list, select Project > Owner.
    5. Click Create. A JSON file that contains your key downloads to your computer.
 
-### Amazon
+### Amazon [Guide](https://docs.aws.amazon.com/rekognition/latest/dg/setting-up.html)
 1. Create an AWS Account [here](https://aws.amazon.com/)
 2. Create Group with policy `AmazonRekognitionFullAccess` [here](https://console.aws.amazon.com/iam/home#/groups)
 3. Create an IAM User with `Programmatic access` and the group you have created [here](https://console.aws.amazon.com/iam/home#/users)
