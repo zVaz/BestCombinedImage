@@ -1,0 +1,4 @@
+pylint
+pillow
+boto3
+google-cloud-vision
