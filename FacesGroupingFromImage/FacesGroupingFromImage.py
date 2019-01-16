@@ -37,6 +37,8 @@ def highlight_faces(image, faces, output_filename, input_filename):
 
 if __name__ == '__main__':
    images_dir = "./images/"
+   if not os.path.exists(os.path.dirname(images_dir)):
+        os.makedirs(os.path.dirname(images_dir))
    images = []
    
    for filename in os.listdir(images_dir):
@@ -55,6 +57,8 @@ if __name__ == '__main__':
          highlight_faces(image, faces, output_filename, filename)
 
    cropped_dir = "./cropped/"
+   if not os.path.exists(os.path.dirname(cropped_dir)):
+        os.makedirs(os.path.dirname(cropped_dir))
    cropped = []
    
    for filename in os.listdir(cropped_dir):
@@ -84,6 +88,8 @@ if __name__ == '__main__':
          cat += 1
 
    groups_dir = "./groups/"
+   if not os.path.exists(os.path.dirname(groups_dir)):
+        os.makedirs(os.path.dirname(groups_dir))
 
    for filename, group in groups.items():
       curr_dir = os.path.join(groups_dir, str(group))
