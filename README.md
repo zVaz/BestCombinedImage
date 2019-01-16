@@ -34,5 +34,6 @@ export GOOGLE_APPLICATION_CREDENTIALS_PATH="PATH TO JSON FILE"
 ```
 
 ## **Running The Project**
-Virtualenv: ```source project/bin/activate```
+>  Virtualenv: ```source project/bin/activate```
+
 ```python FacesGroupingFromImage.py```
