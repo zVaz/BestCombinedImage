@@ -1,6 +1,7 @@
 # **Faces Grouping From Image**
 ## **Virtualenv and Requirements**
 > You can install the requirements.txt globally and ignore the virtualenv
+
 ### Linux\macOS
 1. ```pip3 install virtualenv```
 2. ```virtualenv project```
@@ -16,10 +17,13 @@
 ## **Profile Paths**
 ### Linux
 > Add the lines below to ~/.profile
+
 ### macOS
 > Add the lines below to ~/.bash_profile
+
 ### Windwos
 > Follow the [guide](http://www.forbeslindesay.co.uk/post/42833119552/permanently-set-environment-variables-on-windows)
+
 ```
 export AWS_ACCESS_KEY_ID="ACCESS KEY"
 export AWS_SECRET_ACCESS_KEY="SECRET KEY"
