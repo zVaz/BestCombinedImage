@@ -1,4 +1,23 @@
 # **Faces Grouping From Image**
+## **API Access**
+### Google
+1. Select or create a GCP project. [here](https://console.cloud.google.com/cloud-resource-manager?_ga=2.38538282.-822335999.1544290095)
+2. Make sure that billing is enabled for your project. [here](https://cloud.google.com/billing/docs/how-to/modify-project)
+3. Enable the Cloud Vision API. [here](https://console.cloud.google.com/flows/enableapi?apiid=vision-json.googleapis.com&_ga=2.105122826.-822335999.1544290095)
+4. Set up authentication:
+   1. In the GCP Console, go to the Create service account key page. [here](https://console.cloud.google.com/apis/credentials/serviceaccountkey?_ga=2.52249888.-822335999.1544290095)
+   2. From the Service account drop-down list, select New service account.
+   3. In the Service account name field, enter a name .
+   4. From the Role drop-down list, select Project > Owner.
+   5. Click Create. A JSON file that contains your key downloads to your computer.
+
+### Amazon
+1. Create an AWS Account [here](https://aws.amazon.com/)
+2. Create Group with policy `AmazonRekognitionFullAccess` [here](https://console.aws.amazon.com/iam/home#/groups)
+3. Create an IAM User with `Programmatic access` and the group you have created [here](https://console.aws.amazon.com/iam/home#/users)
+4. Copy the IAM User AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+
+
 ## **Virtualenv and Requirements**
 > You can install the requirements.txt globally and ignore the virtualenv
 
