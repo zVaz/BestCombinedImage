@@ -1,7 +1,7 @@
 # **Faces Grouping From Image**
 ## **API Access**
-### Google [Guide](https://docs.aws.amazon.com/rekognition/latest/dg/setting-up.html)
-1. Select or create a GCP project. [here](https://cloud.google.com/vision/docs/quickstart-client-libraries)
+### Google [Guide](https://cloud.google.com/vision/docs/quickstart-client-libraries)
+1. Select or create a GCP project. [here](https://console.cloud.google.com/cloud-resource-manager?_ga=2.215698846.-822335999.1544290095)
 2. Make sure that billing is enabled for your project. [here](https://cloud.google.com/billing/docs/how-to/modify-project)
 3. Enable the Cloud Vision API. [here](https://console.cloud.google.com/flows/enableapi?apiid=vision-json.googleapis.com&_ga=2.105122826.-822335999.1544290095)
 4. Set up authentication:
@@ -33,20 +33,26 @@
 3. ```project\Scripts\activate```
 4. ```pip install -r requirements.txt```
 
-## **Profile Paths**
+## **Environment Variables**
 ### Linux
 > Add the lines below to ~/.profile
 
 ### macOS
 > Add the lines below to ~/.bash_profile
 
-### Windwos
-> Follow the [guide](http://www.forbeslindesay.co.uk/post/42833119552/permanently-set-environment-variables-on-windows)
-
 ```
 export AWS_ACCESS_KEY_ID="ACCESS KEY"
 export AWS_SECRET_ACCESS_KEY="SECRET KEY"
 export GOOGLE_APPLICATION_CREDENTIALS_PATH="PATH TO JSON FILE"
+```
+
+### Windwos
+> Follow the [guide](http://www.forbeslindesay.co.uk/post/42833119552/permanently-set-environment-variables-on-windows) to add the variables below
+
+```
+Name: AWS_ACCESS_KEY_ID                   Value: "ACCESS KEY"
+Name: AWS_SECRET_ACCESS_KEY               Value: "KEY"
+Name: GOOGLE_APPLICATION_CREDENTIALS_PATH Value: "PATH TO JSON FILE"
 ```
 
 ## **Paths**
