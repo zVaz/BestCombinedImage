@@ -34,17 +34,22 @@
 4. ```pip install -r requirements.txt```
 
 ## **Environment Variables**
-### Linux
-> Add the lines below to ~/.profile
 
-### macOS
-> Add the lines below to ~/.bash_profile
-
+### Linux\macOS
+Add the lines below
 ```
 export AWS_ACCESS_KEY_ID="ACCESS KEY"
 export AWS_SECRET_ACCESS_KEY="SECRET KEY"
 export GOOGLE_APPLICATION_CREDENTIALS_PATH="PATH TO JSON FILE"
 ```
+
+#### Linux
+> ```nano ~/.bashrc```  
+  ```source ~/.bashrc```
+
+#### macOS
+> ```nano ~/.bash_profile```  
+  ```source ~/.bash_profile```
 
 ### Windwos
 > Follow the [guide](http://www.forbeslindesay.co.uk/post/42833119552/permanently-set-environment-variables-on-windows) to add the variables below
