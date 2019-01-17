@@ -36,11 +36,13 @@
 ## **Environment Variables**
 
 ### Linux\macOS
+
 Add the lines below
+
 ```
 export AWS_ACCESS_KEY_ID="ACCESS KEY"
 export AWS_SECRET_ACCESS_KEY="SECRET KEY"
-export GOOGLE_APPLICATION_CREDENTIALS_PATH="PATH TO JSON FILE"
+export GOOGLE_APPLICATION_CREDENTIALS="PATH TO JSON FILE"
 ```
 
 #### Linux

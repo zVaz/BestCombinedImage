@@ -10,7 +10,6 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 
 AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
-GOOGLE_APPLICATION_CREDENTIALS_PATH = os.environ["GOOGLE_APPLICATION_CREDENTIALS"]
 
 AMAZON_CLIENT = boto3.client('rekognition', region_name='us-west-2',
                                 aws_access_key_id=AWS_ACCESS_KEY_ID,
