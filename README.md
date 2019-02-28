@@ -5,4 +5,4 @@
 
 ## Directories
 ```FacesGroupingFromImage (FGFI) - For faces grouping```
-```ImageHeadsSwap         (IHG)  - For head swaping```
+```ImageHeadsSwap         (IHS)  - For head swaping```
