@@ -8,4 +8,4 @@
 
 ```ImageHeadsSwap         (IHS)  - For head swaping```
 
-```ImageHeadsSwap         (IG)  - For grading photos and extracting the highest graded photo```
+```ImageGrading        (IG)  - For grading photos and extracting the highest graded photo```
