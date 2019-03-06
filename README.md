@@ -10,7 +10,7 @@ ImageHeadsSwap         (IHS)  - For head swaping
 ImageGrading           (IG)   - For grading photos and extracting the highest graded photo
 ```
 ## Shared Code
-> ```Add those lines to accsess Shared Code```
+> Add those lines to accsess Shared Code
 ```python
 import sys
 import os
@@ -22,14 +22,14 @@ import utils
 ## **Json Structures**
 ### **FGFI** - data.json
 
-```json
+```python
 {
     "images": [
         {
             "path": path,
             "faces": [
                 {
-                    //Google Vision API response
+                    #Google Vision API response
                     ...
                 }
             ]
@@ -44,7 +44,7 @@ import utils
 ```
 
 ### **IG** - to_replace.json
-```json
+```python
 {
     "image_index": index,
     "faces": [
@@ -62,7 +62,7 @@ import utils
 ```
 
 ### **IHS** - nobg.json
-```json
+```python
 [
     {
         "info": {
