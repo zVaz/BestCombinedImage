@@ -119,8 +119,8 @@ if __name__ == "__main__":
         })
 
     #Save the data to file
-    with open(os.path.join(OUTPUT_DIR, "data.json"), 'w+') as outfile:
-            outfile.write(json.dumps({
-                "images": images_info,
-                "groups": groups
-            }))
+    utils.save_to_json_file(os.path.join(OUTPUT_DIR, "data.json"), 
+                            json.dumps( {
+                                            "images": images_info,
+                                            "groups": groups
+                                        }))

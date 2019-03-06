@@ -3,11 +3,23 @@ import os
 import io
 import config
 from PIL import Image, ImageDraw
+import base64
+
+def base64_image_to_bytes(image64):
+    return base64.b64decode(image64.encode("utf-8"))
+
+def base64_image_to_image(image64):
+    return Image.open(io.BytesIO(base64_image_to_bytes(image64)))
+
 
 def from_json_file(path):
     with open(path) as f:
         input = json.load(f)
     return input
+
+def save_to_json_file(path, data):
+    with open(path, 'w+') as outfile:
+        outfile.write(data)
 
 def image_to_bytes(image, format="png"):
     in_mem_file = io.BytesIO()

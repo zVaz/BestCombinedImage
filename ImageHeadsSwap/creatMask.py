@@ -1,5 +1,15 @@
 from PIL import Image
 import json
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+import config
+import utils
+
+OUTPUT_DIR = os.path.join(config.IHS_DIR , "output")
+
+nobg = utils.from_json_file(os.path.join(OUTPUT_DIR, "nobg.json"))
+image_from = utils.base64_image_to_image(nobg[0]["image_data"])
 
 #Load json file
 with open('pface0.json') as f:
