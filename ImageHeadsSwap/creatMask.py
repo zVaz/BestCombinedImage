@@ -7,8 +7,9 @@ import config
 import utils
 
 OUTPUT_DIR = os.path.join(config.IHS_DIR , "output")
+DEBUG_DIR = os.path.join(config.IHS_DIR , "debug")
 
-nobg = utils.from_json_file(os.path.join(OUTPUT_DIR, "nobg.json"))
+nobg = utils.from_json_file(os.path.join(DEBUG_DIR, "nobg.json"))
 image_from = utils.base64_image_to_image(nobg[0]["image_data"])
 
 #Load json file
