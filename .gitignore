@@ -57,12 +57,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+__pycache__/
+
+FacesGroupingFromImage/input/
+FacesGroupingFromImage/output/
 FacesGroupingFromImage/cropped/
 FacesGroupingFromImage/groups/
 FacesGroupingFromImage/images/
 FacesGroupingFromImage/project/
 
 ImageHeadsSwap/result/
+ImageHeadsSwap/output/
 ImageHeadsSwap/nobg/
 ImageHeadsSwap/images/
 ImageHeadsSwap/input.png
