@@ -11,6 +11,8 @@ def base64_image_to_bytes(image64):
 def base64_image_to_image(image64):
     return Image.open(io.BytesIO(base64_image_to_bytes(image64)))
 
+def image_to_base64_image(image):
+    return base64.b64encode(image_to_bytes(image)).decode("utf-8")
 
 def from_json_file(path):
     with open(path) as f:
@@ -40,7 +42,7 @@ images_dict = {}
 def get_image_by_path(image_path, basr_dir=""):
     if image_path not in images_dict:
         images_dict[image_path] = Image.open(os.path.join(basr_dir, image_path))
-    return images_dict[image_path]
+    return images_dict[image_path].copy()
 
 def save_groups_to_images(images_info, groups, output_dir):
     for i, group in enumerate(groups):
