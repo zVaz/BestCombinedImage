@@ -22,7 +22,7 @@ if not os.path.exists(OUTPUT_DIR):
 if not os.path.exists(NOBG_DIR):
     os.makedirs(NOBG_DIR)
 
-def removebg(image, face):
+def removebg(image):
     response = requests.post(
         'https://api.remove.bg/v1.0/removebg',
         files={'image_file': utils.image_to_bytes(image)},
@@ -31,8 +31,6 @@ def removebg(image, face):
     )
 
     if response.status_code == requests.codes.ok:
-        #with open(os.path.join(NOBG_DIR,"{}_{}.png".format(face["image_index"],face["face_index"])), 'wb') as out:
-        #    out.write(response.content)
         return io.BytesIO(response.content).getvalue()
     else:
         print("Error:", response.status_code, response.text)
