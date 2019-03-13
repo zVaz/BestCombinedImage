@@ -19,7 +19,7 @@ AMAZON_CLIENT = boto3.client('rekognition', region_name='us-west-2',
                                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                                 aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
-IS_DEBUG = True
+IS_DEBUG = False
 
 INPUT_DIR = "./input/"
 OUTPUT_DIR = "./output/"
@@ -57,6 +57,24 @@ def crop_faces_from_images(images):
             print('Found {} face{}'.format(
                   len(images_info[-1]["faces"]), '' if len(images_info[-1]["faces"]) == 1 else 's'))
     return images_info
+
+def detect_properties(images):
+    """Detects image properties in the file."""
+    from google.cloud import vision
+    client = vision.ImageAnnotatorClient()
+    image_properties=[]
+
+    for pic in images:
+        with io.open(pic, 'rb') as image_file:
+            content = image_file.read()
+
+        image = vision.types.Image(content=content)
+
+        response = client.image_properties(image=image)
+        props = response.image_properties_annotation
+
+        utils.save_to_json_file(os.path.join(OUTPUT_DIR, pic.split("/input/")[1].split(".")[0] + ".json"), 
+                        MessageToJson(response))
 
 def get_cropped_faces(images_info):
     faces_info = []
@@ -124,3 +142,5 @@ if __name__ == "__main__":
                                             "images": images_info,
                                             "groups": groups
                                         }))
+
+    detect_properties(images)
