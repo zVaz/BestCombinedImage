@@ -10,6 +10,8 @@ import config
 import utils
 
 def inpaint_image(image, mask):
+    image = np.array(image)
+    mask = np.array(mask)
     image_orig = rescale(image, 1.0 / 4.0, anti_aliasing=False)
     mask = color.rgb2gray(rescale(mask, 1.0 / 4.0, anti_aliasing=False))
     thresh = threshold_otsu(mask)
@@ -20,7 +22,9 @@ def inpaint_image(image, mask):
     image_result = inpaint.inpaint_biharmonic(image_defect, binary,
                                             multichannel=True)
     image_result = rescale(image_result, 4.0, anti_aliasing=False)
-    return image_result
+    mask_result = rescale(mask, 4.0, anti_aliasing=False)
+
+    return image_result, mask_result
 
 RESULT_DIR = os.path.join(config.IHS_DIR, "result")
 
@@ -31,7 +35,7 @@ if __name__ == "__main__":
     image = io.imread(os.path.join(config.IHS_DIR, 'input.png'))
     mask = io.imread(os.path.join(config.IHS_DIR, 'mask.png'))
 
-    image_result = inpaint_image(image, mask)
+    image_result, mask = inpaint_image(image, mask)
     io.imsave(os.path.join(RESULT_DIR, "image_orig.png"), image)
     io.imsave(os.path.join(RESULT_DIR, "image_result.png"), image_result)
 

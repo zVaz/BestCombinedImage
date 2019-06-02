@@ -8,7 +8,7 @@ import utils
 import base64
 
 
-def creat_mask(img , image_from , data):
+def creat_mask(img , image_from , data, image_index, face_index):
    
 
     ###############################################################################
@@ -24,7 +24,7 @@ def creat_mask(img , image_from , data):
     width, height = img.size
 
     #Create new image with original image size
-    img2 = Image.new('RGB', (width,height), color = (255,255,255))
+    img2 = Image.new('RGB', (width,height), color = (0,0,0))
 
 
     ##scale_w , scale_h = width / without_bg_img.size[0] , height / without_bg_img.size[1]
@@ -37,12 +37,12 @@ def creat_mask(img , image_from , data):
 
     for y in range(height):
         for x in range(width):
-            pixdata[x, y] = (0, 0, 0, 255) if pixdata[x, y][3] == 255 else (255, 255, 255, 255)
+            pixdata[x, y] = (255, 255, 255, 255) if pixdata[x, y][3] == 255 else (0, 0, 0, 255)
 
     img2.paste(without_bg_img, top_left)
 
     #Save image
-    img2.save(os.path.join(OUTPUT_DIR, "myMask.png"))
+    #img2.save(os.path.join(OUTPUT_DIR, "myMask.png"))
 
     #Save to json file the mask
     #nobg[1]["mask"] = utils.image_to_base64_image(img2)
