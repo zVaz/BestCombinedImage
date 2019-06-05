@@ -6,6 +6,9 @@ import utils
 
 RESULT_DIR = os.path.join(config.IHS_DIR, "result")
 
+# original-image-file - original
+# masked-image-file - transperent where the mask sould be
+
 a = requests.post(url="https://inf.ngc.nvidia.com/v1/partialconv/inpainting", 
               files={
                   "original-image-file": open(os.path.join(RESULT_DIR, '5.jpg'), 'rb'), 
