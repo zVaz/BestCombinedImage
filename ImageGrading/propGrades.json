@@ -1,5 +1,6 @@
 {
-    "properties":[
+    "properties":
+   [
        {
          "rollAngle":0,
          "panAngle":0,
@@ -15,4 +16,4 @@
          "headwearLikelihood":0
       }
    ]
- }
+}
