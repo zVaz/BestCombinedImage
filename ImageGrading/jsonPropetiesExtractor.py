@@ -14,8 +14,7 @@ class Face():
 # path for faces json files
 facesPath = '/Users/ggrinber/BestCombinedImage/FacesGroupingFromImage/output'
 
-photoFiles = [f for f in listdir(facesPath) if isfile(join(facesPath, f))]
-photoFiles = [i[:1] for i in photoFiles]
+photoFiles = [i[:1] for i in [f for f in listdir(facesPath) if isfile(join(facesPath, f))]]
 photoFiles.remove('d')
 
 # load json file

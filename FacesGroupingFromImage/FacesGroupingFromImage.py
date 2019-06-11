@@ -62,7 +62,6 @@ def detect_properties(images):
     """Detects image properties in the file."""
     from google.cloud import vision
     client = vision.ImageAnnotatorClient()
-    image_properties=[]
 
     for pic in images:
         with io.open(pic, 'rb') as image_file:
@@ -71,7 +70,6 @@ def detect_properties(images):
         image = vision.types.Image(content=content)
 
         response = client.image_properties(image=image)
-        props = response.image_properties_annotation
 
         utils.save_to_json_file(os.path.join(OUTPUT_DIR, pic.split("/input/")[1].split(".")[0] + ".json"), 
                         MessageToJson(response))
