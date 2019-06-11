@@ -8,8 +8,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import config
 import utils
 import base64
+from PIL import Image
 
 API_KEY = "8U1YqN7Gfx7HJwkL6HD9cBKx"
+#API_KEY = "dh8jGhDbVKe6VimqEsBEX5sq"
 
 IMAGES_DIR = os.path.join(config.FGFI_DIR, "input")
 JSON_DIR   = os.path.join(config.FGFI_DIR, "output")
@@ -31,7 +33,7 @@ def removebg(image):
     )
 
     if response.status_code == requests.codes.ok:
-        return io.BytesIO(response.content).getvalue()
+        return Image.open(io.BytesIO(response.content))
     else:
         print("Error:", response.status_code, response.text)
 

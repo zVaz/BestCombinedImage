@@ -49,12 +49,12 @@ import utils
     "image_index": index,
     "faces": [
         {
-            "image_index": index, 
-            "face_index": index
+            "group_index": index, 
+            "group_face_index": index
         },
         {
-            "image_index": index, 
-            "face_index": index
+            "group_index": index, 
+            "group_face_index": index
         },
         ...
     ]    
