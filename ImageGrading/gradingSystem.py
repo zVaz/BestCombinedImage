@@ -1,6 +1,6 @@
-from jsonExtractor import extractFacesProperties, getGradesWeight
+from jsonExtractor import extractFacesProperties, getUpdatedGradesWeight
 
 faces = extractFacesProperties()
-grades_weight = getGradesWeight()
+grades_weight = getUpdatedGradesWeight()
 
 print("log")

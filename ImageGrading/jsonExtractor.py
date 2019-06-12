@@ -14,19 +14,14 @@ class attributesT():
       self.joyLikelihood = joyLikelihood
       self.rollAngle = rollAngle
 
-# path for project home foler
-homePath = '/Users/ggrinber/BestCombinedImage/'
-# path for 1st part output jsons
-facesPath = homePath + 'FacesGroupingFromImage/output'
-# path for properties grades json
-propGradesPath = homePath + 'ImageGrading/propGrades.json'
-
 # get all output files
-photoFiles = [i[:1] for i in [f for f in listdir(FGFI_DIR + '/output/') if isfile(join(FGFI_DIR + '/output/', f))]]
+photoFiles = [i[:1] for i in [f for f in listdir(BASE_DIR + '/output/') if isfile(join(BASE_DIR + '/output/', f))]]
 photoFiles.remove('d')
 
+numOfPhotos = int(max(photoFiles))
+
 # extract updated grades for properties
-def getGradesWeight():
+def getUpdatedGradesWeight():
     # load properties grades weight json
     with open(IMGG_DIR + '/propGrades.json', 'r') as f:
        grade_weight_json = json.load(f)
@@ -40,17 +35,19 @@ def getGradesWeight():
 # extract properties out of json
 def extractFacesProperties():
     # load image data json
-    with open(FGFI_DIR + '/output/data.json', 'r') as f:
+    with open(BASE_DIR + '/output/data.json', 'r') as f:
         image_data_json = json.load(f)
 
-    for i in range(0, int(max(photoFiles))):
-        facesList = []
-        print("Face number ", i)
-        # add face number i
-        facesList.append(attributesT(image_data_json['images'][i]['faces'][i]['detectionConfidence'], 
-                                     image_data_json['images'][i]['faces'][i]['blurredLikelihood'], 
-                                     image_data_json['images'][i]['faces'][i]['headwearLikelihood'],
-                                     image_data_json['images'][i]['faces'][i]['joyLikelihood'],
-                                     image_data_json['images'][i]['faces'][i]['rollAngle']))
+    numOfFaces = len(image_data_json['images'][0]['faces'])
 
-        return facesList
+    facesList = [[0]*numOfPhotos for i in range(numOfFaces)]
+    for photoIndex in range(0, numOfPhotos):
+        for i in range(0, numOfFaces):
+            #print("Face number ", i)
+            # add face number i
+            facesList[photoIndex][i] = attributesT(image_data_json['images'][photoIndex]['faces'][i]['detectionConfidence'], 
+                                        image_data_json['images'][photoIndex]['faces'][i]['blurredLikelihood'], 
+                                        image_data_json['images'][photoIndex]['faces'][i]['headwearLikelihood'],
+                                        image_data_json['images'][photoIndex]['faces'][i]['joyLikelihood'],
+                                        image_data_json['images'][photoIndex]['faces'][i]['rollAngle'])
+    return facesList
