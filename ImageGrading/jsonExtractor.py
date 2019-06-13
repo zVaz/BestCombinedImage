@@ -3,7 +3,7 @@ from os import listdir           # for files and system handling
 from os.path import isfile, join 
 import sys                      # for 'config.py' path
 sys.path.insert(0, '/Users/ggrinber/BestCombinedImage/')
-from config import BASE_DIR, FGFI_DIR, IMGG_DIR # for paths
+from config import BASE_DIR, IMGG_DIR # for paths
 
 # Attributes template
 class attributesT():
