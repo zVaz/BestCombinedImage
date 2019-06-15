@@ -4,9 +4,10 @@ from os.path import isfile, join, dirname
 import sys                      # for 'config.py' path
 sys.path.append(join(dirname(__file__), '..'))
 from config import FGFI_DIR, IMGG_DIR # for paths
+import utils
 
-# Attributes template
-class attributesT():
+# Attributes template (grading json)
+class attributesT(object):
    def __init__(self, detectionConfidence, blurredLikelihood, headwearLikelihood, joyLikelihood, rollAngle):
       self.detectionConfidence = detectionConfidence
       self.blurredLikelihood = blurredLikelihood
@@ -14,11 +15,36 @@ class attributesT():
       self.joyLikelihood = joyLikelihood
       self.rollAngle = rollAngle
 
+# Faces data
+class attributesI(attributesT):
+   strToGrade = { 'VERY_UNLIKELY' : 1,
+                'UNLIKELY': 2,
+                'POSSIBLE' : 3,
+                'LIKELY' : 4,
+                'VERY_LIKELY' : 5,
+                'UNKOWN' : 0 }
+
+   def __init__(self, detectionConfidence, blurredLikelihood, headwearLikelihood, joyLikelihood, rollAngle, face_info):
+      super(attributesI, self).__init__(detectionConfidence, blurredLikelihood, headwearLikelihood, joyLikelihood, rollAngle)
+      self.face_info = face_info
+      self.grade = 0
+      
+   def set_grade(self, grades_weight):
+      attributes = [a for a in dir(grades_weight) if not a.startswith('__')]
+      for attr in attributes:
+         faceAttrValue = getattr(self, attr)
+         # if attribute is a likeliness string, got to dict
+         if type(faceAttrValue) is str:
+               self.grade += attributesI.strToGrade[faceAttrValue] * getattr(grades_weight, attr)
+         else:
+               self.grade += faceAttrValue * getattr(grades_weight, attr)
+
+
 # get all output files
 photoFiles = [i[:1] for i in [f for f in listdir(FGFI_DIR + '/output/') if isfile(join(FGFI_DIR + '/output/', f))]]
 photoFiles.remove('d')
 
-numOfPhotos = int(max(photoFiles))
+#numOfPhotos = int(max(photoFiles))
 
 # extract updated grades for properties
 def getUpdatedGradesWeight():
@@ -38,16 +64,22 @@ def extractFacesProperties():
     with open(FGFI_DIR + '/output/data.json', 'r') as f:
         image_data_json = json.load(f)
 
-    numOfFaces = len(image_data_json['images'][0]['faces'])
+    res = []
+    groups = image_data_json["groups"]
+    
 
-    facesList = [[0]*numOfPhotos for i in range(numOfFaces)]
-    for photoIndex in range(0, numOfPhotos):
-        for i in range(0, numOfFaces):
-            #print("Face number ", i)
-            # add face number i
-            facesList[photoIndex][i] = attributesT(image_data_json['images'][photoIndex]['faces'][i]['detectionConfidence'], 
-                                        image_data_json['images'][photoIndex]['faces'][i]['blurredLikelihood'], 
-                                        image_data_json['images'][photoIndex]['faces'][i]['headwearLikelihood'],
-                                        image_data_json['images'][photoIndex]['faces'][i]['joyLikelihood'],
-                                        image_data_json['images'][photoIndex]['faces'][i]['rollAngle'])
-    return facesList
+    for group_index, group in enumerate(groups):
+        res.append([])
+        for group_face_index, face in enumerate(group):
+            image_index = face["image_index"]
+            face_index  = face["face_index"]
+
+            image_data = image_data_json['images'][image_index]
+            face_data = image_data['faces'][face_index]
+            face["group_index"] = group_index
+            face["group_face_index"] = group_face_index
+            res[-1].append(attributesI(face_data["detectionConfidence"], face_data["blurredLikelihood"], face_data["headwearLikelihood"], face_data["joyLikelihood"], face_data["rollAngle"], face))
+
+            im = utils.get_cropped_image(image_data_json, face)
+
+    return res

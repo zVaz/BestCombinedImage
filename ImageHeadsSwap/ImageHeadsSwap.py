@@ -1,6 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.dirname(__file__))
 import config
 import utils
 import creatMask
@@ -12,7 +13,7 @@ from skimage import data, io, color
 import numpy as np
 
 JSON_DIR   = os.path.join(config.FGFI_DIR, "output")
-INPUT_DIR  = os.path.join(config.IHS_DIR , "debug")
+INPUT_DIR  = os.path.join(config.IMGG_DIR , "output")
 RESULT_DIR = os.path.join(config.IHS_DIR, "result")
 
 if not os.path.exists(RESULT_DIR):
