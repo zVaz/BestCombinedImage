@@ -19,11 +19,8 @@ AMAZON_CLIENT = boto3.client('rekognition', region_name='us-west-2',
                                 aws_access_key_id=AWS_ACCESS_KEY_ID,
                                 aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
 
-IS_DEBUG = False
-
-INPUT_DIR = "./input/"
-OUTPUT_DIR = "./output/"
-DEBUG_DIR = "./debug/"
+INPUT_DIR   = os.path.join(config.FGFI_DIR, "input")
+OUTPUT_DIR   = os.path.join(config.FGFI_DIR, "output")
 
 if not os.path.exists(os.path.dirname(INPUT_DIR)):
     os.makedirs(os.path.dirname(INPUT_DIR))
@@ -113,17 +110,11 @@ def get_cropped_images_groups(images_info):
             cat += 1  
     return groups
 
-if __name__ == "__main__":
+def main():
     images = get_images()
     
-    if IS_DEBUG:
-        with open(os.path.join(OUTPUT_DIR, "images_info.json")) as f:
-            images_info = json.load(f)
-        with open(os.path.join(OUTPUT_DIR, "groups.json")) as f:
-            groups_dict = json.load(f)
-    else:
-        images_info = crop_faces_from_images(images)
-        groups_dict = get_cropped_images_groups(images_info)
+    images_info = crop_faces_from_images(images)
+    groups_dict = get_cropped_images_groups(images_info)
 
     #Convert groups to list of dictionary
     groups = [[] for i in range(len(set(groups_dict.values())))]
@@ -142,3 +133,6 @@ if __name__ == "__main__":
                                         }))
 
     detect_properties(images)
+
+if __name__ == "__main__":
+    main()

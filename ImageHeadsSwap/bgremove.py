@@ -10,8 +10,9 @@ import utils
 import base64
 from PIL import Image
 
-API_KEY = "8U1YqN7Gfx7HJwkL6HD9cBKx"
+#API_KEY = "8U1YqN7Gfx7HJwkL6HD9cBKx"
 #API_KEY = "dh8jGhDbVKe6VimqEsBEX5sq"
+API_KEY = "yGRiPszoW6X4fU39GGX5TTh9"
 
 IMAGES_DIR = os.path.join(config.FGFI_DIR, "input")
 JSON_DIR   = os.path.join(config.FGFI_DIR, "output")

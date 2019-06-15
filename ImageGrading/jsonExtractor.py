@@ -1,9 +1,9 @@
 import json                      # for json handling
 from os import listdir           # for files and system handling
-from os.path import isfile, join 
+from os.path import isfile, join, dirname
 import sys                      # for 'config.py' path
-sys.path.insert(0, '/Users/ggrinber/BestCombinedImage/')
-from config import BASE_DIR, IMGG_DIR # for paths
+sys.path.append(join(dirname(__file__), '..'))
+from config import FGFI_DIR, IMGG_DIR # for paths
 
 # Attributes template
 class attributesT():
@@ -15,7 +15,7 @@ class attributesT():
       self.rollAngle = rollAngle
 
 # get all output files
-photoFiles = [i[:1] for i in [f for f in listdir(BASE_DIR + '/output/') if isfile(join(BASE_DIR + '/output/', f))]]
+photoFiles = [i[:1] for i in [f for f in listdir(FGFI_DIR + '/output/') if isfile(join(FGFI_DIR + '/output/', f))]]
 photoFiles.remove('d')
 
 numOfPhotos = int(max(photoFiles))
@@ -35,7 +35,7 @@ def getUpdatedGradesWeight():
 # extract properties out of json
 def extractFacesProperties():
     # load image data json
-    with open(BASE_DIR + '/output/data.json', 'r') as f:
+    with open(FGFI_DIR + '/output/data.json', 'r') as f:
         image_data_json = json.load(f)
 
     numOfFaces = len(image_data_json['images'][0]['faces'])
