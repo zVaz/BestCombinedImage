@@ -10,8 +10,8 @@ import config
 import utils
 
 def inpaint_image(image, mask):
-    image = np.array(image)
-    mask = np.array(mask)
+    image = np.array(image.copy())
+    mask = np.array(mask.copy())
     image_orig = rescale(image, 1.0 / 4.0, anti_aliasing=False)
     mask = color.rgb2gray(rescale(mask, 1.0 / 4.0, anti_aliasing=False))
     thresh = threshold_otsu(mask)
