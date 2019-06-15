@@ -79,7 +79,12 @@ def main():
         inpainted_image = Image.fromarray(skimage.util.img_as_ubyte(inpainted_array))
         mask_image      = Image.fromarray(skimage.util.img_as_ubyte(mask_array))
         mask_image.save(os.path.join(RESULT_DIR, "mask_{}.png".format(i)))
-
+        inpainted_image = inpainted_image.resize(good_image.size)
+        
+        print(mask_image.size)
+        print(good_image.size)
+        print(inpainted_image.size)
+        
         good_image = Image.composite(inpainted_image, good_image, mask_image.convert("L"))
         good_image.save(os.path.join(RESULT_DIR, "in_{}.png".format(i)))
 

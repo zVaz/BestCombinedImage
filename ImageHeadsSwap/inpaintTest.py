@@ -13,18 +13,18 @@ def inpaint_image(image, mask):
     image = np.array(image.copy())
     mask = np.array(mask.copy())
     image_orig = rescale(image, 1.0 / 4.0, anti_aliasing=False)
-    mask = color.rgb2gray(rescale(mask, 1.0 / 4.0, anti_aliasing=False))
-    thresh = threshold_otsu(mask)
-    binary = mask > thresh
+    mask = color.rgb2gray(mask)
+    rescaled_mask = rescale(mask, 1.0 / 4.0, anti_aliasing=False)
+    thresh = threshold_otsu(rescaled_mask)
+    binary = rescaled_mask > thresh
     image_defect = image_orig.copy()
     for layer in range(image_defect.shape[-1]):
         image_defect[np.where(binary)] = 0
     image_result = inpaint.inpaint_biharmonic(image_defect, binary,
                                             multichannel=True)
     image_result = rescale(image_result, 4.0, anti_aliasing=False)
-    mask_result = rescale(mask, 4.0, anti_aliasing=False)
 
-    return image_result, mask_result
+    return image_result, mask
 
 RESULT_DIR = os.path.join(config.IHS_DIR, "result")
 
