@@ -78,8 +78,15 @@ def main():
         inpainted_array, mask_array = inpaintTest.inpaint_image(good_image, face_to_replace["face"]["mask"])
         inpainted_image = Image.fromarray(skimage.util.img_as_ubyte(inpainted_array))
         mask_image      = Image.fromarray(skimage.util.img_as_ubyte(mask_array))
-        inpainted_image.save(os.path.join(RESULT_DIR, "in_{}.png".format(i)))
         mask_image.save(os.path.join(RESULT_DIR, "mask_{}.png".format(i)))
+        inpainted_image = inpainted_image.resize(good_image.size)
+        
+        print(mask_image.size)
+        print(good_image.size)
+        print(inpainted_image.size)
+        
+        good_image = Image.composite(inpainted_image, good_image, mask_image.convert("L"))
+        good_image.save(os.path.join(RESULT_DIR, "in_{}.png".format(i)))
 
         face_image_mask = creatMask.copy_face_to_image(good_image, 
                                                         face_to_replace["replacer"]["nobg"] , 
@@ -91,8 +98,8 @@ def main():
                                                         face_to_replace["face"]["face_index"], False)
         face_image_mask.save(os.path.join(RESULT_DIR, "fm_{}.png".format(i)))
         face_image.save(os.path.join(RESULT_DIR, "f_{}.png".format(i)))
-        comp = Image.composite(face_image, inpainted_image, face_image_mask.convert("L"))
-        comp.save(os.path.join(RESULT_DIR, "comp_{}.png".format(i)))
+        good_image = Image.composite(face_image, good_image, face_image_mask.convert("L"))
+        good_image.save(os.path.join(RESULT_DIR, "comp_{}.png".format(i)))
 
 if __name__ == "__main__":
     main()

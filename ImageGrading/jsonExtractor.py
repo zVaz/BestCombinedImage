@@ -75,13 +75,6 @@ class attributesI(attributesT):
          else:
                self.grade += faceAttrValue * getattr(grades_weight, attr)
 
-
-# get all output files
-photoFiles = [i[:1] for i in [f for f in listdir(FGFI_DIR + '/output/') if isfile(join(FGFI_DIR + '/output/', f))]]
-photoFiles.remove('d')
-
-#numOfPhotos = int(max(photoFiles))
-
 # extract updated grades for properties
 def getUpdatedGradesWeight():
     # load face properties grades weight json
