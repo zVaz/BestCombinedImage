@@ -34,11 +34,13 @@ def get_faces_to_replace(input_data, data):
                 face_to_replace_image = utils.get_cropped_image(data, face_to_replace, config.FGFI_DIR)
                 fr_width, fr_height = face_to_replace_image.size
                 print(fr_width, fr_height)
-                ratio = f_width / float(fr_width)
+                ratio = f_height / float(fr_height)
                 print("Scaling ratio {}".format(ratio))
                 face_to_replace_image = face_to_replace_image.resize( [int(ratio * s) for s in face_to_replace_image.size] )
+                print("face_to_replace_image", face_to_replace_image.size)
                 face_image_no_bg = bgremove.removebg(face_image)
                 face_to_replace_image_bg = bgremove.removebg(face_to_replace_image)
+                print("face_to_replace_image_bg", face_to_replace_image_bg.size)
                 face_image_mask = creatMask.copy_face_to_image(good_image, 
                                                                 face_image_no_bg , 
                                                                 data, face["image_index"], 

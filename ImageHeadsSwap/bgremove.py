@@ -29,7 +29,7 @@ def removebg(image):
     response = requests.post(
         'https://api.remove.bg/v1.0/removebg',
         files={'image_file': utils.image_to_bytes(image)},
-        data={'size': 'regular'},
+        data={'size': 'auto'},
         headers={'X-Api-Key': API_KEY},
     )
 

@@ -2,12 +2,8 @@
     "image_index": 1,
     "faces": [
         {
-            "group_index": 1,
+            "group_index": 0,
             "group_face_index": 0
-        },
-        {
-            "group_index": 2,
-            "group_face_index": 2
         }
     ]
 }
