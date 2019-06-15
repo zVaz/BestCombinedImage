@@ -1,0 +1,10 @@
+{
+    "properties":
+   [
+       {
+         "sharpness":0.4,
+         "contrast":0.2,
+         "brightness":0.4
+      }
+   ]
+}
