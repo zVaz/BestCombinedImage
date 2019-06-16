@@ -80,7 +80,7 @@ def main():
         mask_image      = Image.fromarray(skimage.util.img_as_ubyte(mask_array))
         mask_image.save(os.path.join(RESULT_DIR, "mask_{}.png".format(i)))
         inpainted_image = inpainted_image.resize(good_image.size)
-        
+
         print(mask_image.size)
         print(good_image.size)
         print(inpainted_image.size)
@@ -91,7 +91,7 @@ def main():
         face_image_mask = creatMask.copy_face_to_image(good_image, 
                                                         face_to_replace["replacer"]["nobg"] , 
                                                         data, face_to_replace["face"]["image_index"], 
-                                                        face_to_replace["face"]["face_index"]).filter(ImageFilter.GaussianBlur(radius=2))
+                                                        face_to_replace["face"]["face_index"], border=True).filter(ImageFilter.GaussianBlur(radius=2))
         face_image      = creatMask.copy_face_to_image(good_image, 
                                                         face_to_replace["replacer"]["nobg"] , 
                                                         data, face_to_replace["face"]["image_index"], 

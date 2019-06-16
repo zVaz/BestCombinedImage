@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageDraw
 import json
 import sys
 import os
@@ -8,7 +8,7 @@ import utils
 import base64
 
 
-def copy_face_to_image(img , image_from , data, image_index, face_index, masked = True):
+def copy_face_to_image(img , image_from , data, image_index, face_index, masked = True, border = False):
    
 
     ###############################################################################
@@ -34,6 +34,10 @@ def copy_face_to_image(img , image_from , data, image_index, face_index, masked 
         for y in range(height):
             for x in range(width):
                 pixdata[x, y] = (255, 255, 255, 255) if pixdata[x, y][3] == 255 else (0, 0, 0, 255)
+
+    if border:
+        d = ImageDraw.Draw(without_bg_img)
+        d.rectangle([0,0,without_bg_img.width,without_bg_img.height], width = 7, outline="#000000")
 
     img2.paste(without_bg_img, top_left)
 
