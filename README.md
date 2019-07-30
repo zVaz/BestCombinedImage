@@ -60,24 +60,3 @@ import utils
     ]    
 }
 ```
-
-### **IHS** - nobg.json
-```python
-[
-    {
-        "info": {
-            "image_index": index, 
-            "face_index": index
-        }, 
-        "image_data": base64
-    },
-    {
-        "info": {
-            "image_index": index, 
-            "face_index": index
-        }, 
-        "image_data": base64
-    },
-    ...
-]
-```
