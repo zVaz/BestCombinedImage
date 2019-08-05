@@ -82,6 +82,8 @@ def get_cropped_faces(images_info):
                 "face"       : utils.crop_image_by_rect(copy, 
                                                         face["boundingPoly"]["vertices"])
             })
+    #or face in faces_info:
+    #    face["face"].save(os.path.join(OUTPUT_DIR, "{}_{}.jpeg".format(face["image_index"], face["face_index"])))
     return faces_info
 
 

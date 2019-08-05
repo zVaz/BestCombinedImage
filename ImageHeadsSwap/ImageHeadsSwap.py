@@ -11,6 +11,8 @@ import skimage
 from PIL import Image, ImageFilter
 from skimage import data, io, color
 import numpy as np
+from ImageProcessingUtils import inpaint
+import math
 
 JSON_DIR   = os.path.join(config.FGFI_DIR, "output")
 INPUT_DIR  = os.path.join(config.IMGG_DIR , "output")
@@ -37,7 +39,7 @@ def get_faces_to_replace(input_data, data):
                 print(fr_width, fr_height)
                 ratio = f_height / float(fr_height)
                 print("Scaling ratio {}".format(ratio))
-                face_to_replace_image = face_to_replace_image.resize( [int(ratio * s) for s in face_to_replace_image.size] )
+                #face_to_replace_image = face_to_replace_image.resize( [int(ratio * s) for s in face_to_replace_image.size] )
                 print("face_to_replace_image", face_to_replace_image.size)
                 face_image_no_bg = bgremove.removebg(face_image)
                 face_to_replace_image_bg = bgremove.removebg(face_to_replace_image)
@@ -75,29 +77,39 @@ def main():
     faces_to_replace = get_faces_to_replace(input_data, data)
     
     for i, face_to_replace in enumerate(faces_to_replace):
-        inpainted_array, mask_array = inpaintTest.inpaint_image(good_image, face_to_replace["face"]["mask"])
-        inpainted_image = Image.fromarray(skimage.util.img_as_ubyte(inpainted_array))
-        mask_image      = Image.fromarray(skimage.util.img_as_ubyte(mask_array))
+        print(face_to_replace["face"]["image"].size)
+        print(face_to_replace["replacer"]["image"].size)
+        print(face_to_replace["face"]["nobg"].size)
+        print(face_to_replace["replacer"]["nobg"].size)
+    
+        #inpainted_array, mask_array = inpaintTest.inpaint_image(good_image, face_to_replace["face"]["mask"])
+        #inpainted_image = Image.fromarray(skimage.util.img_as_ubyte(inpainted_array))
+        width, height = face_to_replace["face"]["image"].size
+        radius = math.floor(min(width, height) * 0.018)
+        print("width = {}, height = {}, radius = {}".format(width, height, radius))
+        good_image, inpainted_mask_image = inpaint(good_image, face_to_replace["face"]["mask"].convert("L"), radius)
+        mask_image      = face_to_replace["face"]["mask"]
         mask_image.save(os.path.join(RESULT_DIR, "mask_{}.png".format(i)))
-        inpainted_image = inpainted_image.resize(good_image.size)
+        #inpainted_image = inpainted_image.resize(good_image.size)
 
-        print(mask_image.size)
-        print(good_image.size)
-        print(inpainted_image.size)
+        #print(mask_image.size)
+        #print(good_image.size)
+        #print(inpainted_image.size)
         
-        good_image = Image.composite(inpainted_image, good_image, mask_image.convert("L"))
+        #good_image = Image.composite(inpainted_image, good_image, inpainted_mask_image.convert("L"))
         good_image.save(os.path.join(RESULT_DIR, "in_{}.png".format(i)))
 
         face_image_mask = creatMask.copy_face_to_image(good_image, 
                                                         face_to_replace["replacer"]["nobg"] , 
                                                         data, face_to_replace["face"]["image_index"], 
-                                                        face_to_replace["face"]["face_index"], border=True).filter(ImageFilter.GaussianBlur(radius=2))
+                                                        face_to_replace["face"]["face_index"], border=True).filter(ImageFilter.GaussianBlur(radius=1))
         face_image      = creatMask.copy_face_to_image(good_image, 
                                                         face_to_replace["replacer"]["nobg"] , 
                                                         data, face_to_replace["face"]["image_index"], 
                                                         face_to_replace["face"]["face_index"], False)
         face_image_mask.save(os.path.join(RESULT_DIR, "fm_{}.png".format(i)))
         face_image.save(os.path.join(RESULT_DIR, "f_{}.png".format(i)))
+        #good_image.paste(face_image, (0,0), face_image_mask.convert("L"))
         good_image = Image.composite(face_image, good_image, face_image_mask.convert("L"))
         good_image.save(os.path.join(RESULT_DIR, "comp_{}.png".format(i)))
 
