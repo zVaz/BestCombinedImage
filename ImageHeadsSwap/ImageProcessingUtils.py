@@ -55,7 +55,7 @@ def get_border_of_mask(mask):
     border_queue = []
 
     first_border_pixel = get_first_border_pixel(mask, mask_pixdata, width, height)
-    print(first_border_pixel)
+
     if first_border_pixel != None:
         border_queue.append(first_border_pixel)
 
@@ -199,16 +199,20 @@ def inpaint_image(img ,disntances_dict, disntances):
     #ret.show()
     return ret
 
-def mask_from_disntances_dict(mask, disntances_dict):
+def mask_from_disntances_dict(mask, disntances_dict, data):
+    chin_tip = next(filter(lambda landmark: landmark["type"] == "CHIN_GNATHION", data["landmarks"]), None)
+    chin_tip = (int(chin_tip["position"]["x"]), int(chin_tip["position"]["y"]))
+    print(chin_tip)
     width, height = mask.size
     new_mask = Image.new('L', (width,height), color = 0)
     pixdata = new_mask.load()
     for distances_list in disntances_dict.values():
         for pixel in distances_list:
-            pixdata[pixel[0], pixel[1]] = 255
+            if pixel[1] < (chin_tip[1] + 4) // 3:
+                pixdata[pixel[0], pixel[1]] = 255
     return new_mask
 
-def inpaint(img, mask, radius):
+def inpaint(img, mask, data, radius):
     print("Start inpaint")
     radius = math.floor(radius / 1.5)
     width, height = mask.size
@@ -218,7 +222,7 @@ def inpaint(img, mask, radius):
     border = get_border_of_mask(small_mask)
     disntances_dict, disntances = get_disntances_from_border(small_mask, border, radius)
     ret = inpaint_image(small_img, disntances_dict, disntances)
-    inpainted_mask_image = mask_from_disntances_dict(small_mask, disntances_dict)
+    inpainted_mask_image = mask_from_disntances_dict(small_mask, disntances_dict, data)
     inpainted_mask_image = inpainted_mask_image.resize(mask.size, Image.ANTIALIAS)
     ret = ret.resize(img.size, Image.ANTIALIAS)
 

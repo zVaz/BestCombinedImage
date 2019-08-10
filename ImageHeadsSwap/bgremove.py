@@ -11,12 +11,12 @@ import base64
 from PIL import Image
 
 #API_KEY = "8U1YqN7Gfx7HJwkL6HD9cBKx" # 5/8/19
-#API_KEY = "dh8jGhDbVKe6VimqEsBEX5sq"
+API_KEY = "dh8jGhDbVKe6VimqEsBEX5sq"
 #API_KEY = "yGRiPszoW6X4fU39GGX5TTh9"
 #API_KEY = "a8F9YyMfNTTwkBh53QRPmsQM"
 #API_KEY = "2yJvu9EqKjFv3iC2gBKFHKuP" # 5/8/19
 #API_KEY = "tfgmcC7qHiDaX7ycBuacxwR5" # 5/8/19
-API_KEY = "XVdwcMKuu7RdXTNooqf8bqus"
+#API_KEY = "XVdwcMKuu7RdXTNooqf8bqus"
 
 IMAGES_DIR = os.path.join(config.FGFI_DIR, "input")
 JSON_DIR   = os.path.join(config.FGFI_DIR, "output")
@@ -33,7 +33,7 @@ def removebg(image):
     response = requests.post(
         'https://api.remove.bg/v1.0/removebg',
         files={'image_file': utils.image_to_bytes(image)},
-        data={'size': 'auto'},
+        data={'size': 'regular'},
         headers={'X-Api-Key': API_KEY},
     )
 
