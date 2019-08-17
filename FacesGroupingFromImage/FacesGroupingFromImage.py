@@ -76,14 +76,18 @@ def get_cropped_faces(images_info):
     for image_index, image in enumerate(images_info):
         for face_index, face in enumerate(image["faces"]):
             copy = utils.get_image_by_path(image["path"]).copy()
+            cropped_face = utils.crop_image_by_rect(copy, face["boundingPoly"]["vertices"])
+            thumbnail_face = cropped_face.copy()
+            thumbnail_face.thumbnail((128, 128))
             faces_info.append({
                 "image_index": image_index,
                 "face_index" : face_index,
-                "face"       : utils.crop_image_by_rect(copy, 
-                                                        face["boundingPoly"]["vertices"])
+                "face"       : cropped_face,
+                "small"      : thumbnail_face
             })
-    #or face in faces_info:
+    #for face in faces_info:
     #    face["face"].save(os.path.join(OUTPUT_DIR, "{}_{}.jpeg".format(face["image_index"], face["face_index"])))
+    #exit()
     return faces_info
 
 
@@ -102,10 +106,10 @@ def get_cropped_images_groups(images_info):
                 if to_group_index(face_info2["image_index"], face_info2["face_index"]) not in groups:
                     response = AMAZON_CLIENT.compare_faces(SimilarityThreshold=70,
                                                         SourceImage={
-                                                            'Bytes': utils.image_to_bytes(face_info["face"])
+                                                            'Bytes': utils.image_to_bytes(face_info["small"])
                                                         },
                                                         TargetImage={
-                                                            'Bytes': utils.image_to_bytes(face_info2["face"])
+                                                            'Bytes': utils.image_to_bytes(face_info2["small"])
                                                         })
                     if len(response['FaceMatches']) > 0 and response['FaceMatches'][0]['Face']['Confidence'] >= 40:
                         groups[to_group_index(face_info2["image_index"], face_info2["face_index"])] = cat

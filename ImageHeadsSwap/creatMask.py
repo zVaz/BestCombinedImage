@@ -9,13 +9,12 @@ import base64
 
 
 def copy_face_to_image(img , image_from , data, image_index, face_index, masked = True, border = False):
-    print(image_index, face_index)
+    #print(image_index, face_index)
 
     ###############################################################################
 
     vertices = data["images"][image_index]["faces"][face_index]["boundingPoly"]["vertices"]
-    print(vertices[0]['x'])
-    print((abs(image_from.size[0] - abs(vertices[1]['x'] - vertices[0]['x'])) // 2))
+
     #Set vetices corddinates from json file
     x = vertices[0]['x'] + (abs(image_from.size[0] - abs(vertices[1]['x'] - vertices[0]['x'])) // 2)
     y = vertices[0]['y'] + (abs(image_from.size[1] - abs(vertices[2]['y'] - vertices[1]['y'])) // 2)
@@ -23,7 +22,6 @@ def copy_face_to_image(img , image_from , data, image_index, face_index, masked 
 
 def copy_face_to_image_v2(img , image_from , x, y, masked = True, border = False):
     top_left = (x, y)
-    print("--> {} {}".format(x, y))
 
     without_bg_img = image_from.convert("RGBA")
 

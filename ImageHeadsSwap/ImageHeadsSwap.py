@@ -90,18 +90,17 @@ def get_faces_to_replace(input_data, data):
         face_to_replace = group[face_to_replace_info["group_face_index"]]
         for face in group:
             if face["image_index"] == input_data["image_index"]:
-
                 face_image = utils.get_cropped_image(data, face, config.FGFI_DIR)
                 f_width, f_height = face_image.size
-                print(f_width, f_height)
+                #print(f_width, f_height)
                 face_to_replace_image = utils.get_cropped_image(data, face_to_replace, config.FGFI_DIR)
                 fr_width, fr_height = face_to_replace_image.size
-                print(fr_width, fr_height)
+                #print(fr_width, fr_height)
                 width_ratio, height_ratio = calc_ratio(data, face, face_to_replace)
-                print("Scaling ratio width {}  height {}".format(width_ratio, height_ratio))
-                face_to_replace_image = face_to_replace_image.resize( (int(face_to_replace_image.size[0] * width_ratio), 
-                                                                       int(face_to_replace_image.size[1] * height_ratio)) )
-                print("face_to_replace_image", face_to_replace_image.size)
+                print("Scaling ratio: width {}, height {}".format(width_ratio, height_ratio))
+                #face_to_replace_image = face_to_replace_image.resize( (int(face_to_replace_image.size[0] * width_ratio), 
+                #                                                       int(face_to_replace_image.size[1] * height_ratio)) )
+                #print("face_to_replace_image", face_to_replace_image.size)
                 face_image_no_bg = bgremove.removebg(face_image)
                 face_image_no_bg = face_image_no_bg.resize(face_image.size)
 
@@ -142,14 +141,14 @@ def main():
     faces_to_replace = get_faces_to_replace(input_data, data)
     
     for i, face_to_replace in enumerate(faces_to_replace):
-        print(face_to_replace["face"]["image"].size)
-        print(face_to_replace["replacer"]["image"].size)
-        print(face_to_replace["face"]["nobg"].size)
-        print(face_to_replace["replacer"]["nobg"].size)
+        #print(face_to_replace["face"]["image"].size)
+        #print(face_to_replace["replacer"]["image"].size)
+        #print(face_to_replace["face"]["nobg"].size)
+        #print(face_to_replace["replacer"]["nobg"].size)
     
         width, height = face_to_replace["face"]["image"].size
         radius = math.floor(min(width, height) * 0.018)
-        print("width = {}, height = {}, radius = {}".format(width, height, radius))
+        #print("width = {}, height = {}, radius = {}".format(width, height, radius))
 
         
         face_data = data["images"][face_to_replace["face"]["data"]["image_index"]]["faces"][face_to_replace["face"]["data"]["face_index"]]
@@ -174,6 +173,6 @@ def main():
 
         good_image = Image.composite(face_image, good_image, face_image_mask.convert("L"))
         good_image.save(os.path.join(RESULT_DIR, "comp_{}.png".format(i)))
-
+    good_image.show()
 if __name__ == "__main__":
     main()

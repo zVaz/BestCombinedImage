@@ -100,7 +100,7 @@ def get_disntances_from_border(mask, border, radius):
 
     start = time.time()
     disntances = np.full(shape=(width, height),fill_value=None, dtype=object)
-    print(time.time() - start)
+    #print(time.time() - start)
 
     for pixel in border:
         disntances[pixel[0], pixel[1]] = BorderDistance()
@@ -139,7 +139,7 @@ def get_disntances_from_border(mask, border, radius):
                     disntances[neighboor[0], neighboor[1]].set_visited(current_distance + 1)
                     pixel_queue.append(neighboor)
         disntances_dict.setdefault(current_distance, set()).add(current)
-    print(time.time() - start)
+    #print(time.time() - start)
 
     #start = time.time()
     #img = Image.new('L', (width,height), color = 0)
@@ -202,7 +202,7 @@ def inpaint_image(img ,disntances_dict, disntances):
 def mask_from_disntances_dict(mask, disntances_dict, data):
     chin_tip = next(filter(lambda landmark: landmark["type"] == "CHIN_GNATHION", data["landmarks"]), None)
     chin_tip = (int(chin_tip["position"]["x"]), int(chin_tip["position"]["y"]))
-    print(chin_tip)
+    #print(chin_tip)
     width, height = mask.size
     new_mask = Image.new('L', (width,height), color = 0)
     pixdata = new_mask.load()
@@ -213,7 +213,7 @@ def mask_from_disntances_dict(mask, disntances_dict, data):
     return new_mask
 
 def inpaint(img, mask, data, radius):
-    print("Start inpaint")
+    #print("Start inpaint")
     radius = math.floor(radius / 1.5)
     width, height = mask.size
     small_img = img.resize((img.size[0] // 3, img.size[1] // 3), Image.ANTIALIAS)
@@ -227,7 +227,7 @@ def inpaint(img, mask, data, radius):
     ret = ret.resize(img.size, Image.ANTIALIAS)
 
     ret = Image.composite(ret, img, inpainted_mask_image.convert("L"))
-    print("End inpaint")
+    #print("End inpaint")
     return ret, inpainted_mask_image
 
 if __name__ == "__main__":
@@ -238,4 +238,4 @@ if __name__ == "__main__":
     #cProfile.run('inpaint(img, mask)')
     inpainted_mask_image.show()
     inp.show()
-    print(time.time() - start)
+    #print(time.time() - start)
